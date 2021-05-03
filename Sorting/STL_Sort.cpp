@@ -32,6 +32,7 @@ int main()
 
 	//Is_sorted
 	is_sorted(vec.begin(), vec.end()) ? cout << "Sorted" : cout << "Not sorted";
+
 	cout << endl;
 	
 	return 0;
