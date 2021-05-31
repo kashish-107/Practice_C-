@@ -15,6 +15,7 @@ Notes:
 					- can return lvalue from functions
 
 4. rvalue reference - int&& r = 10;
+					- Usage: a)Move semantic b) Perfect Forwarding
 */
 
 #include<iostream>
