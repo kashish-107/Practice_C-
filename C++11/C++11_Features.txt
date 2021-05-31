@@ -1,0 +1,15 @@
+Initializer List
+Uniform Initialization
+Auto Type
+foreach 
+nullptr
+enum class
+static assert
+delegating constructor
+constexpr
+New string literals
+Keyword final
+Keyword delete
+Keyword default (for default constructor)
+Keyword override
+Lambda Function
