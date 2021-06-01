@@ -13,3 +13,6 @@ Keyword delete
 Keyword default (for default constructor)
 Keyword override
 Lambda Function
+Decltype
+Rvalue Reference
+Move ctor and Move assignment operator
