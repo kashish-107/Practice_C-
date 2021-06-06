@@ -1,104 +1,91 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<memory>
 using namespace std;
+
+class IObserver;
 
 class subject {
 	int subject_val;
-	vector<class observer*> list;
+	vector<weak_ptr<IObserver>> list;
 	void notifyAll();
 public:
-	subject():subject(0){}
+	subject():subject(0){
+	}
 	subject(int i) :subject_val{ i } {
 		cout << "Intial value of subject is" << subject_val << endl;
 	}
-	void attach(observer*);
-	void detach(observer* obs) {
-		
-		list.erase(find(list.begin(), list.end(), obs));
+	void attach(shared_ptr<IObserver> obs) {
+		list.push_back(obs);
 	}
-	void setValue(const int);
-
+	//void detach(const IObserver& obs) {
+	//	list.erase(find(list.begin(), list.end(), obs));
+	//}
+	void setValue(const int iValue) {
+		cout << __FUNCTION__ << endl;
+		subject_val = iValue;
+		notifyAll();
+	}
 	~subject() {
 		cout << __FUNCTION__ << endl;
 	}
-
 };
 
-void subject::attach(observer* obs){
-	list.push_back(obs);
-}
-
-void subject::setValue(const int iValue) {
-	subject_val = iValue;
-	notifyAll();
-}
-
-
-class observer {
-	subject* pSubject;
+class IObserver {
 public:
-	observer(subject* iSub) {
-		pSubject = iSub;
-		pSubject->attach(this);
-	}
 	virtual void update(int) = 0;
-	virtual ~observer() {
-		pSubject->detach(this);
+	virtual ~IObserver() {
 		cout << __FUNCTION__ << endl;
 	}
 };
 
 void subject::notifyAll() {
-	for (auto i : list)
-		i->update(subject_val);
+	cout << __FUNCTION__ << endl;
+	for (auto i : list) {
+		auto sPtr = i.lock();
+		if (sPtr)
+			sPtr->update(subject_val);
+		else
+			cout << "Listener is dead" << endl;
+	}
 }
 
-class A_observer :public observer {
-	void update(int) override;
+//Listeners
+class A_IObserver :public IObserver {
+private:
+	 void update(int newVal) override {
+		cout << "A_IObserver subject value is" << newVal << endl;
+	}
 public:
-	A_observer(subject*);
-
-	~A_observer() {
+	~A_IObserver() {
 		cout << __FUNCTION__ << endl;
 	}
 };
 
-A_observer::A_observer(subject* sub) : observer{ sub } {
-}
-void A_observer::update(int newVal) {
-	cout << "A_observer subject value is" << newVal << endl;
-}
-
-class B_observer :public observer {
-	void update(int) override;
+class B_IObserver :public IObserver {
+	void update(int newVal) override {
+		cout << "B_IObserver subject value is" << newVal << endl;
+	}
 public:
-	B_observer(subject*);
 	
-	~B_observer() {
+	~B_IObserver() {
 		cout << __FUNCTION__ << endl;
 	}
 };
-
-void B_observer::update(int newVal) {
-	cout << "B_observer subject value is" << newVal << endl;
-}
-
-B_observer::B_observer(subject* sub) : observer{ sub } {
-}
 
 int main() {
-	subject* sub = new subject(10);
-	observer* A_Obs = new A_observer(sub);
-	observer* B_Obs = new B_observer(sub);
+	unique_ptr<subject> sub = make_unique<subject>(10);
+	shared_ptr<IObserver> A_Obs = make_shared<A_IObserver>();
+	shared_ptr<IObserver> B_Obs = make_shared<B_IObserver>();
 
+	sub->attach(A_Obs);
+	sub->attach(B_Obs);
+
+//	auto var = B_Obs.get();
+    B_Obs.reset();            
+
+	cout << __FUNCTION__ << endl;
 	sub->setValue(20);
-	delete B_Obs;
-
-	//B_Obs.detach();
 	sub->setValue(30);
-
-	delete A_Obs;
-	
-	delete sub;
 }
