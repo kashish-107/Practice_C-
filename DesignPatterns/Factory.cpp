@@ -5,6 +5,7 @@
 */
 
 #include <iostream>
+#include <memory>
 using namespace std;
 
 enum class ToyData { Car, Bike };
@@ -20,7 +21,9 @@ public:
 
 class Car :public Toy {
 public:
-	Car() = default;
+	Car() {
+		cout << __FUNCTION__ << endl;
+	}
 
 	void showProduct() const override {
 		cout << "Car" << endl;
@@ -33,7 +36,9 @@ public:
 
 class Bike :public Toy {
 public:
-	Bike() = default;
+	Bike() {
+		cout << __FUNCTION__ << endl;
+	}
 	void showProduct() const override {
 		cout << "Bike" << endl;
 	}
@@ -45,12 +50,12 @@ public:
 
 class ToyFactory {
 public:
-	static Toy* createToy(ToyData iType) {
-		Toy* obj = nullptr;
+	static unique_ptr<Toy> createToy(ToyData iType) {
+		unique_ptr<Toy> obj = nullptr;
 		if (iType == ToyData::Car)
-			obj = new Car();
+			obj = make_unique<Car>();
 		else if (iType == ToyData::Bike)
-			obj = new Bike();
+			obj = make_unique<Bike>();
 		
 		return obj;
 	}
@@ -58,14 +63,11 @@ public:
 
 //Client
 int main() { 
-	Toy* pCar = ToyFactory::createToy(ToyData::Car);
-	if(pCar) pCar->showProduct();
-	delete pCar;
+	unique_ptr<Toy> pCar = ToyFactory::createToy(ToyData::Car);
+	if (pCar) pCar->showProduct();
 
-	Toy* pBike = ToyFactory::createToy(ToyData::Bike);
+	unique_ptr<Toy> pBike = ToyFactory::createToy(ToyData::Bike);
 	if (pBike) pBike->showProduct();
-	delete pBike;
-
 	return 0;
 }
 
