@@ -1,6 +1,14 @@
 /*
 - In C++, virtual functions can be private and can be overridden by the derived class
 - Why error in case of private inheritance of base class - To check?
+- Virtual functions cannot be static - Reason: This pointer
+- A virtual function can be a friend function of another class
+- Virtual functions cannot be static.
+- A virtual function can be a friend function of another class
+- Can virtual functions be inlined?
+		Whenever virtual function is called using base class reference or pointer it cannot be inlined (because call is resolved at runtime), 
+		but whenever called using the object (without reference or pointer) of that class, 
+		can be inlined because compiler knows the exact class of the object at compile time.
 */
 
 #include<iostream>
@@ -9,7 +17,7 @@ using namespace std;
 class A {
 public:
 	
-	void func() {
+	virtual void func() {
 		cout << "Func A" << endl;
 	}
 };
@@ -78,7 +86,7 @@ int main() {
 	bptr->print();
 
 	unique_ptr<Derived> bptr2 = make_unique<Derived>();
-	bptr2->print(); //Error
+	//bptr2->print(); //Error
 
 	return 0;
 }
