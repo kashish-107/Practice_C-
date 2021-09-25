@@ -1,5 +1,5 @@
-#include"../Print.h"
-#include"../Point.h"
+#include"../HelperHeaders/Print.h"
+#include"../HelperHeaders/Point.h"
 #include<algorithm>
 
 using namespace std;
@@ -32,7 +32,6 @@ int main()
 
 	//Is_sorted
 	is_sorted(vec.begin(), vec.end()) ? cout << "Sorted" : cout << "Not sorted";
-
 	cout << endl;
 	
 	return 0;

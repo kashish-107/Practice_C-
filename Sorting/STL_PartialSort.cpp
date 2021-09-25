@@ -1,4 +1,4 @@
-#include"..\Print.h"
+#include"../HelperHeaders/Print.h"
 #include<algorithm>
 
 bool ownGreaterCmp(int x, int y)

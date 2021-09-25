@@ -58,5 +58,7 @@ int main()
 
 	//shared_ptr<A[]> arr (new A[3]);
 
+	cout << sizeof(p) << endl;
+
 	return 0;
 }
