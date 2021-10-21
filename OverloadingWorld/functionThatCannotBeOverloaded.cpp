@@ -1,5 +1,5 @@
 /*
-1. Function declarations that differ only in the return type
+1. Function declarations that differ only in the return type because return type is not considered in name mangiling.
 2. Parameter declarations that differ only in a pointer * versus an array [] are equivalent
 3. Two parameter declarations that differ only in their default arguments are equivalent
 4. Member function declarations with the same name and the name parameter-type-list cannot be overloaded if any of them is a static member function declaration

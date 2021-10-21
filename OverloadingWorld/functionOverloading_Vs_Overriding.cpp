@@ -14,7 +14,7 @@ How function overloading works:
 	-Else error :(
 
 Important:
-	-  return type doesn’t play anyrole in function overloading.
+	-  return type doesn’t play anyrole in function overloading. Because return type is not considered in name-mangiling.
 */
 
 #include<iostream>
