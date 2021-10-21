@@ -54,9 +54,15 @@ int main()
 	if(!pNewToy) cout<<"Memory allocation failed"<<endl;
 	delete[] pNewToy;					      //Dtor
 
-	Toy *pNewToy1 = new Toy[BIG_NUMBER];                          //Exception thrown program exit
-	if(pNewToy1 == 0x0) cout<<"Memory allocation failed - NoThrow"<<endl;
-	cout<<"Exception throw"<<endl;
+	Toy *pNewToy1 = NULL;
+	try
+	{
+		pNewToy1 = new Toy[BIG_NUMBER];                          //Exception thrown program exit
+	}
+	catch(...)
+	{
+		cout<<"Exception throw"<<endl;
+	}
 
 	delete[] pNewToy1;					      //Dtor
 	return 0;
