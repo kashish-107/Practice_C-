@@ -1,0 +1,15 @@
+1. Associative containers place their elements based on the element itself
+2. For example, it's not possible to add an element at the back or front in an associative container
+3. The elements are added in a way that makes it possible to find the element without the need to scan the entire container
+
+Two main categories-
+	1. Ordered- These containers are based on trees. These
+containers use a tree for storing their elements. They require that the elements are
+ordered by the less than operator (<). The functions for adding, deleting, and
+finding elements are all O(log n) in the tree-based containers. The containers are
+named std::set, std::map, std::multiset, and std::multimap.
+	2. Unordered- These containers are based on hash tables.
+These containers uses a hash table for storing their elements.The
+functions for adding, deleting, and finding elements are all O(1) in the hash tablebased containers. The containers are named std::unordered_set,
+std::unordered_map, std::unordered_multiset, and
+std::unordered_multimap.
