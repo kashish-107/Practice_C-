@@ -1,0 +1,27 @@
+1. Algorithm operate on iterators
+2. All algorithms take a pair of iterators
+3. Algorithms do not change the size of the container
+4. std::remove() or std::unique() does not actually remove elements from
+	a container. Rather, it rearranges the elements so that the removed elements are placed at
+	the back. It then returns an iterator to the first element of the removed elements.
+5. Algorithms that write data to an output iterator, such as std::copy() or
+	std::transform(), requires already allocated data reserved for the output. As the
+	algorithms only use iterators as arguments, they cannot allocate data by themselves. To
+	enlarge the container the algorithms operate on, they rely on the iterator to be capable of
+	enlarging the container it iterates
+6. Algorithms use operator== and operator< by default
+7. The complexity of each STL algorithm is specified using big O notation. STL algorithms are
+created with performance in mind. Therefore, they do not allocate memory nor have a time
+complexity higher than O(n log n). Algorithms that do not fit these criteria are not included
+even if they are fairly common operations
+	Note- the exception of std::stable_sort() , std::inplace_merge(),
+and std::stable_partition() . Many STL implementations tend to
+temporarily allocate memory during these operation.
+8. Allocating means that we cannot trust it not to throw
+9. Note that it is actually the std::find_if(), not std::find() which utilizes this loop
+unrolling optimization. But the std::find() is implemented using std::find_if().
+In addition to std::find(), a multitude of algorithms in libstdc++ is implemented using
+std::find_if(), for example std::any_of(), std::all_of(), std::none_of(),
+std::find_if_not(), std::search(), std::is_partitioned(), std::remove_if(),
+std::is_permutation(), which means that all of these are slightly faster than a
+handcrafted for-loop.
