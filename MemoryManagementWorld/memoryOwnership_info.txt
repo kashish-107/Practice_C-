@@ -1,0 +1,28 @@
+1. Expressing non-ownership
+	- Non-owning access to an object should be granted by using raw pointers or references
+	- Any function that cannot accept a NULL pointer must instead take a reference
+	-  C++ Core Guidelines library offers an alternative for expressing non-NULL
+pointers—not_null<T*>. Note that this is not a part of the language itself, but can be
+implemented in standard C++ without any language extension
+
+2. Expressing exclusive ownership
+	- If a stack variable does what you need, use it.
+	- Reason for heap allocation
+		- need to keep the object alive for longer
+		- other reason to create objects on the heap is that the size or type of the object may not be known at compile time
+	- way of expressing the exclusive ownership of such objects using std::unique_ptr
+
+3. Expressing transfer of exclusive ownership
+	- FactoryMethod: caller to take ownership of the returned object
+	- What we need here is an ownership transfer—WidgetFactory is certainly an exclusive
+owner of the object it constructs, but at some point, it needs to hand off that ownership to a
+new, also exclusive, owner
+	- Use unique_ptr<> for exclusive ownership
+	- what about the stack variables?
+		- functions must be declared to take the parameters by the rvalue reference T&&	
+		- caller must explicitly give up the ownership by wrapping the argument in std::move
+
+4. Expressing shared ownership
+	- Using shared_ptr<>
+	- Take care of cycle dependency which can be solved by weak_ptr<>
+	- Keep in mind the downsides of shared_ptr<>
