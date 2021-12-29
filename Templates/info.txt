@@ -1,0 +1,43 @@
+-------------------Templates-----------------------
+1. Generic programming
+2. Algorithms are written in terms of types to-be-specified-later
+3. Reduce redundancy and programming efforts
+4. Increasing reusability and flexibility
+5. Different types of templates:
+	- Function
+	- Class
+	- Variable(C++14)
+6. Three different type of template parameters
+	- Type parameter: Whenever we use concrete type, e.g: int, char or even a class
+	- Non-type parameter: Typically like values 3.
+			      Excluded like floating-point number and string(C arrays). Since c++20 they work as well, with some limitation
+	- Template-Template parameter: if we pass a template as a template parameter
+7. Class template: Instantiation
+	- A class template can not automatically derive its argument
+	- Exception c++17 - Here we have class "template argument deduction".
+8. Class template: Method templates
+	- Methods of a class template can themselves be a template of their own. This is called "Method template"
+	- Can be defined inside/outside
+	- Copy ctor/dtor can not be templates
+9. Can pass more than one data types as arguments to templates
+10 Can specify default arguments to templates. -> template<class T, class U = char>
+11 Each instantiation of functioni/class template has its own copy of local static variables.
+12 Class template: Inheritance
+13 Alias templates
+14 Guideliness for efficient use of templates:
+	- Template generate code for us
+	- It is as if we copy and paste out implementation and changes types and values.
+	- Depending on compiler and optimizer, this can result in a larger binary
+	- Storing an additional type/value(like in std::span) is better then passing it as a template parameter.
+	- In case of function template: check if you can use them as API but forward the actual work to non-template function.
+
+15 Disadvantage:
+	- Code-bloat
+16 Solution for code-bloat:
+	- std::span (available in c++20)
+	- std::span<char> data;
+	- Span store pointer of lengths because it store lengths, the lengths doesn't need to be specified for the template
+	- Internally using concept of array decay and storing data and its length
+17 Thinking in types: Type traits
+	-Types are known at compile time - we can do modification and checks to types at compile time
+18 Constexpr if - If and all branches are evaluated at compile time
